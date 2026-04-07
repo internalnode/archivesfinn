@@ -4,8 +4,12 @@ var bootRunning = false;
 function goTo(index) {
   var track = document.getElementById("track");
   if (!track) return;
+
   currentIndex = index;
   track.style.transform = "translateX(-" + (index * 25) + "%)";
+
+  // 🔥 SCROLL AUTOMATIQUE EN HAUT
+  window.scrollTo(0, 0);
 }
 
 function resetLoading() {
