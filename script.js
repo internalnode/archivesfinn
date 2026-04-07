@@ -1,6 +1,25 @@
 var currentIndex = 0;
 var bootRunning = false;
 
+function forceScrollTop() {
+  window.scrollTo(0, 0);
+
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+
+  requestAnimationFrame(function () {
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  });
+
+  setTimeout(function () {
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }, 60);
+}
+
 function goTo(index) {
   var track = document.getElementById("track");
   if (!track) return;
@@ -8,8 +27,7 @@ function goTo(index) {
   currentIndex = index;
   track.style.transform = "translateX(-" + (index * 25) + "%)";
 
-  // 🔥 SCROLL AUTOMATIQUE EN HAUT
-  window.scrollTo(0, 0);
+  forceScrollTop();
 }
 
 function resetLoading() {
@@ -93,6 +111,7 @@ function bootTo(index) {
         goTo(index);
         overlay.classList.remove("active");
         bootRunning = false;
+        forceScrollTop();
       }, 260);
       return;
     }
@@ -145,12 +164,16 @@ function openMission(key) {
   bootTo(3);
 
   setTimeout(function () {
+    forceScrollTop();
+
     typeText(contextEl, mission.context, 8, function () {
       var i = 0;
 
       function addNextTimelineItem() {
         if (i >= mission.timeline.length) {
-          typeText(outcomeEl, mission.outcome, 8);
+          typeText(outcomeEl, mission.outcome, 8, function () {
+            forceScrollTop();
+          });
           return;
         }
 
@@ -170,4 +193,5 @@ function openMission(key) {
 
 window.onload = function () {
   goTo(0);
+  forceScrollTop();
 };
