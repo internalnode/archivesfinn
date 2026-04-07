@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Internal Node</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<div class="app">
+  <div class="viewport">
+    <div class="track" id="track">
+
+      <!-- SCREEN 1 -->
+      <section class="screen">
+        <div class="card">
+          <div class="system-line terminal-prompt">
+            NODE // UKSF INTERNAL ACCESS PORTAL • SECURITY LAYER ONLINE
+          </div>
+
+          <div class="alert-line">
+            ALERT // UNAUTHORIZED ACCESS DETECTED
+          </div>
+
+          <h1 class="title">INTRUSION SIGNALÉE</h1>
+
+          <div class="sub">
+            SESSION FLAGGED // EXTERNAL ACCESS ATTEMPT // TRACE ENABLED
+          </div>
+
+          <div class="alert-box">
+            <div class="alert-box-title">SECURITY NOTICE</div>
+            Tentative d’accès non reconnue détectée sur le nœud interne.
+            L’authentification de session est requise avant toute consultation du registre.
+          </div>
+
+          <div class="terminal-divider"></div>
+
+          <p class="text">
+            Toute interaction est consignée. L’accès au dossier opératif reste soumis à validation
+            de session et ouverture sécurisée du registre interne.
+          </p>
+
+          <div class="btn-row">
+            <button type="button" class="btn btn-primary" onclick="bootTo(1)">AUTHENTICATE SESSION</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 2 -->
+      <section class="screen">
+        <div class="card">
+          <div class="system-line terminal-prompt">
+            ACCESS GRANTED // OPERATOR DOSSIER LOADED
+          </div>
+
+          <h1 class="title">OPERATOR PROFILE</h1>
+
+          <div class="sub">
+            UKSF INTERNAL PERSONNEL RECORD // ACTIVE ENTRY
+          </div>
+
+          <div class="terminal-divider"></div>
+
+          <div class="operator-grid">
+            <div class="op-row">
+              <span>NAME</span>
+              <span>FINN CALDER</span>
+            </div>
+            <div class="op-row">
+              <span>CALLSIGN</span>
+              <span>GHOST</span>
+            </div>
+            <div class="op-row">
+              <span>UNIT</span>
+              <span>SAS</span>
+            </div>
+            <div class="op-row">
+              <span>REFERENCE</span>
+              <span>UKSF-GHOST-F17</span>
+            </div>
+          </div>
+
+          <div class="terminal-divider"></div>
+
+          <div class="operator-grid">
+            <div class="op-row">
+              <span>STATUS</span>
+              <span class="accent">ACTIVE</span>
+            </div>
+            <div class="op-row">
+              <span>CLEARANCE</span>
+              <span class="accent-strong">BLACK</span>
+            </div>
+            <div class="op-row">
+              <span>DEPLOYMENT</span>
+              <span>CLASSIFIED</span>
+            </div>
+          </div>
+
+          <div class="terminal-divider"></div>
+
+          <div class="operator-grid">
+            <div class="op-row">
+              <span>SPECIALITY</span>
+              <span>INFILTRATION / EXTRACTION</span>
+            </div>
+            <div class="op-row">
+              <span>FIELD PROFILE</span>
+              <span>LOW-SIGNATURE OPERATIONS</span>
+            </div>
+            <div class="op-row">
+              <span>SERVICE RECORD</span>
+              <span>PARTIALLY SEALED</span>
+            </div>
+          </div>
+
+          <div class="terminal-divider"></div>
+
+          <div class="btn-row">
+            <button type="button" class="btn btn-primary" onclick="bootTo(2)">LOAD OPERATIONS ARCHIVE</button>
+            <button type="button" class="btn" onclick="bootTo(0)">TERMINATE SESSION</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 3 -->
+      <section class="screen">
+        <div class="card">
+          <div class="system-line terminal-prompt">
+            OPERATIONS REGISTRY // INTERNAL ARCHIVE
+          </div>
+
+          <div class="file" onclick="openMission('nightfall')">
+            <div class="file-top">
+              <span>FILE // 2020 // DUSTLINE</span>
+              <span class="tag tag-closed">STATE // CLOSED</span>
+            </div>
+            <h3>Extraction en zone semi-désertique</h3>
+            <p>Insertion nocturne, communications minimales, objectif localisé puis exfiltré.</p>
+            <div class="file-meta">
+              <span>CLEARANCE // BLACK</span>
+              <span>THEATRE // URBAN EDGE</span>
+              <span>RISK // HIGH</span>
+            </div>
+          </div>
+
+          <div class="terminal-divider"></div>
+
+          <div class="file" onclick="openMission('blackridge')">
+            <div class="file-top">
+              <span>FILE // 2021 // RED LAKE</span>
+              <span class="tag tag-archived">STATE // ARCHIVED</span>
+            </div>
+            <h3>Intervention sur site isolé</h3>
+            <p>Présence hostile présumée et stabilisation rapide du périmètre.</p>
+            <div class="file-meta">
+              <span>CLEARANCE // RESTRICTED</span>
+              <span>THEATRE // MOUNTAIN</span>
+              <span>RISK // ELEVATED</span>
+            </div>
+          </div>
+
+          <div class="terminal-divider"></div>
+
+          <div class="file" onclick="openMission('silent_echo')">
+            <div class="file-top">
+              <span>FILE // 2022 // MARROW</span>
+              <span class="tag tag-restricted">STATE // RESTRICTED</span>
+            </div>
+            <h3>Rétention clandestine et récupération sensible</h3>
+            <p>Dossier partiellement masqué. Consultation limitée aux entrées de synthèse autorisées.</p>
+            <div class="file-meta">
+              <span>CLEARANCE // BLACK</span>
+              <span>THEATRE // SUBTERRANEAN</span>
+              <span>RISK // UNKNOWN</span>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="btn" onclick="bootTo(1)">RETURN TO DOSSIER</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN 4 -->
+      <section class="screen">
+        <div class="card">
+          <div class="system-line terminal-prompt" id="detailSystemLine">
+            OPERATION FILE // LOADED
+          </div>
+
+          <h1 class="title" id="detailMainTitle">MISSION</h1>
+
+          <div class="sub" id="detailSub">
+            FILE // 0000 • STATE // ARCHIVED
+          </div>
+
+          <div class="mission-meta-grid" id="detailMeta">
+            <div class="meta-box">
+              <div class="meta-label">CLEARANCE</div>
+              <div class="meta-value" id="detailClearance">—</div>
+            </div>
+            <div class="meta-box">
+              <div class="meta-label">THEATRE</div>
+              <div class="meta-value" id="detailTheatre">—</div>
+            </div>
+            <div class="meta-box">
+              <div class="meta-label">RISK</div>
+              <div class="meta-value" id="detailRisk">—</div>
+            </div>
+          </div>
+
+          <div class="terminal-divider"></div>
+
+          <div class="detail-grid">
+            <div class="detail-box">
+              <div class="detail-kicker">CONTEXT</div>
+              <p id="detailContext">—</p>
+            </div>
+
+            <div class="terminal-divider"></div>
+
+            <div class="detail-box">
+              <div class="detail-kicker">TIMELINE</div>
+              <ul class="detail-list" id="detailTimeline"></ul>
+            </div>
+
+            <div class="terminal-divider"></div>
+
+            <div class="detail-box">
+              <div class="detail-kicker">OUTCOME</div>
+              <p id="detailOutcome">—</p>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button type="button" class="btn" onclick="bootTo(2)">RETURN TO OPERATIONS</button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="loading-title terminal-prompt">BOOT SEQUENCE // SESSION AUTHENTICATION</div>
+
+      <div class="loading-lines">
+        <div class="loading-line" id="line1">INITIALIZING SECURE SESSION...</div>
+        <div class="loading-line" id="line2">VERIFYING ACCESS TOKEN...</div>
+        <div class="loading-line" id="line3">CONNECTING TO INTERNAL NODE...</div>
+        <div class="loading-line" id="line4">MOUNTING ARCHIVE REGISTRY...</div>
+        <div class="loading-line" id="line5">SESSION VALIDATED.</div>
+      </div>
+
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+
+      <div class="loading-footer terminal-cursor">PROCESSING</div>
+    </div>
+  </div>
+</div>
+
+<script src="./missions.js"></script>
+<script src="./script.js"></script>
+</body>
+</html>
