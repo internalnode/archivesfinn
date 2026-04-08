@@ -1,65 +1,23 @@
 var currentIndex = 0;
 var bootRunning = false;
 
-/* =========================
-   GESTION SCROLL MOBILE
-========================= */
-
-function getViewportHeight() {
-  if (window.visualViewport && window.visualViewport.height) {
-    return window.visualViewport.height;
-  }
-  return window.innerHeight;
-}
-
-function updateScrollLock() {
+function getActiveScreen() {
   var screens = document.querySelectorAll(".screen");
-  if (!screens.length || !screens[currentIndex]) return;
+  return screens[currentIndex] || null;
+}
 
-  var activeScreen = screens[currentIndex];
-  var card = activeScreen.querySelector(".card") || activeScreen;
+function getActiveScrollable() {
+  var screen = getActiveScreen();
+  if (!screen) return null;
+  return screen.querySelector(".card-scroll");
+}
 
-  var contentHeight = Math.ceil(card.getBoundingClientRect().height);
-  var viewportHeight = Math.ceil(getViewportHeight());
-
-  var shouldLock = contentHeight <= viewportHeight - 6;
-
-  if (shouldLock) {
-    document.documentElement.style.overflowY = "hidden";
-    document.body.style.overflowY = "hidden";
-    document.body.style.overscrollBehaviorY = "none";
-    document.documentElement.style.overscrollBehaviorY = "none";
-    document.body.style.touchAction = "manipulation";
-  } else {
-    document.documentElement.style.overflowY = "auto";
-    document.body.style.overflowY = "auto";
-    document.body.style.overscrollBehaviorY = "auto";
-    document.documentElement.style.overscrollBehaviorY = "auto";
-    document.body.style.touchAction = "auto";
+function resetActiveScroll() {
+  var scrollable = getActiveScrollable();
+  if (scrollable) {
+    scrollable.scrollTop = 0;
   }
 }
-
-function forceScrollTop() {
-  window.scrollTo(0, 0);
-  document.body.scrollTop = 0;
-  document.documentElement.scrollTop = 0;
-
-  requestAnimationFrame(function () {
-    window.scrollTo(0, 0);
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  });
-
-  setTimeout(function () {
-    window.scrollTo(0, 0);
-    document.body.scrollTop = 0;
-    document.documentElement.scrollTop = 0;
-  }, 60);
-}
-
-/* =========================
-   NAVIGATION
-========================= */
 
 function goTo(index) {
   var track = document.getElementById("track");
@@ -68,20 +26,14 @@ function goTo(index) {
   currentIndex = index;
   track.style.transform = "translateX(-" + (index * 25) + "%)";
 
-  forceScrollTop();
-
   requestAnimationFrame(function () {
-    updateScrollLock();
+    resetActiveScroll();
   });
 
   setTimeout(function () {
-    updateScrollLock();
-  }, 80);
+    resetActiveScroll();
+  }, 50);
 }
-
-/* =========================
-   LOADING
-========================= */
 
 function resetLoading() {
   var bar = document.getElementById("progressBar");
@@ -153,9 +105,6 @@ function bootTo(index) {
         goTo(index);
         overlay.classList.remove("active");
         bootRunning = false;
-
-        forceScrollTop();
-        updateScrollLock();
       }, 260);
       return;
     }
@@ -179,43 +128,43 @@ function bootTo(index) {
   writeNextLine();
 }
 
-/* =========================
-   MISSIONS
-========================= */
-
 function openMission(key) {
   var mission = missions[key];
   if (!mission) return;
 
-  document.getElementById("detailSystemLine").textContent = mission.system;
-  document.getElementById("detailMainTitle").textContent = mission.title;
-  document.getElementById("detailSub").textContent = mission.sub;
-  document.getElementById("detailClearance").textContent = mission.clearance || "—";
-  document.getElementById("detailTheatre").textContent = mission.theatre || "—";
-  document.getElementById("detailRisk").textContent = mission.risk || "—";
-
+  var systemEl = document.getElementById("detailSystemLine");
+  var titleEl = document.getElementById("detailMainTitle");
+  var subEl = document.getElementById("detailSub");
   var contextEl = document.getElementById("detailContext");
   var outcomeEl = document.getElementById("detailOutcome");
   var timelineEl = document.getElementById("detailTimeline");
 
-  contextEl.textContent = "";
-  outcomeEl.textContent = "";
-  timelineEl.innerHTML = "";
+  var clearanceEl = document.getElementById("detailClearance");
+  var theatreEl = document.getElementById("detailTheatre");
+  var riskEl = document.getElementById("detailRisk");
+
+  if (systemEl) systemEl.textContent = mission.system;
+  if (titleEl) titleEl.textContent = mission.title;
+  if (subEl) subEl.textContent = mission.sub;
+  if (clearanceEl) clearanceEl.textContent = mission.clearance || "—";
+  if (theatreEl) theatreEl.textContent = mission.theatre || "—";
+  if (riskEl) riskEl.textContent = mission.risk || "—";
+
+  if (contextEl) contextEl.textContent = "";
+  if (outcomeEl) outcomeEl.textContent = "";
+  if (timelineEl) timelineEl.innerHTML = "";
 
   bootTo(3);
 
   setTimeout(function () {
-    forceScrollTop();
-    updateScrollLock();
+    resetActiveScroll();
 
     typeText(contextEl, mission.context, 8, function () {
       var i = 0;
 
       function addNext() {
         if (i >= mission.timeline.length) {
-          typeText(outcomeEl, mission.outcome, 8, function () {
-            updateScrollLock();
-          });
+          typeText(outcomeEl, mission.outcome, 8);
           return;
         }
 
@@ -224,34 +173,15 @@ function openMission(key) {
 
         typeText(li, mission.timeline[i], 7, function () {
           i++;
-          updateScrollLock();
           setTimeout(addNext, 60);
         });
       }
 
       addNext();
     });
-
   }, 500);
-}
-
-/* =========================
-   INIT
-========================= */
-
-window.addEventListener("resize", updateScrollLock);
-
-if (window.visualViewport) {
-  window.visualViewport.addEventListener("resize", updateScrollLock);
-  window.visualViewport.addEventListener("scroll", function () {
-    if (document.documentElement.style.overflowY === "hidden") {
-      forceScrollTop();
-    }
-  });
 }
 
 window.onload = function () {
   goTo(0);
-  forceScrollTop();
-  updateScrollLock();
 };
