@@ -232,8 +232,13 @@ body::after {
 .detail-grid,
 .mission-meta-grid {
   display: grid;
-  gap: 10px;
+  gap: 6px;
 }
+
+.mission-meta {
+    padding: 10px 12px;
+    border: 1px solid rgba(120, 160, 120, 0.15);
+  }
 
 .mission-meta-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
