@@ -65,6 +65,38 @@ function resetShutdown() {
   }
 }
 
+function ensureCrtFlash() {
+  var viewport = document.querySelector(".viewport");
+  if (!viewport) return null;
+
+  var existing = document.getElementById("crtFlash");
+  if (existing) return existing;
+
+  var flash = document.createElement("div");
+  flash.id = "crtFlash";
+  flash.className = "crt-flash";
+  viewport.appendChild(flash);
+  return flash;
+}
+
+function playCrtShutdownEffect() {
+  var viewport = document.querySelector(".viewport");
+  var flash = ensureCrtFlash();
+
+  if (!viewport || !flash) return;
+
+  flash.classList.remove("active");
+  viewport.classList.remove("crt-off");
+
+  void flash.offsetWidth;
+
+  flash.classList.add("active");
+
+  setTimeout(function () {
+    viewport.classList.add("crt-off");
+  }, 120);
+}
+
 function typeText(element, text, speed, callback) {
   if (!element) {
     if (callback) callback();
@@ -223,15 +255,12 @@ function openMission(key) {
 
 function lockTerminalPermanently() {
   terminalLocked = true;
-
   document.body.classList.add("terminal-dead");
 
   var app = document.querySelector(".app");
   if (app) {
     app.style.pointerEvents = "none";
   }
-
-  window.onbeforeunload = null;
 }
 
 function terminateSession() {
@@ -242,47 +271,52 @@ function terminateSession() {
 
   lockTerminalPermanently();
   resetShutdown();
-  shutdownOverlay.classList.add("active");
-  shutdownOverlay.setAttribute("aria-hidden", "false");
 
-  var lines = [
-    "CLOSING ACTIVE SESSION...",
-    "REVOKING OPERATOR ACCESS...",
-    "UNMOUNTING ARCHIVE REGISTRY...",
-    "SEALING INTERNAL NODE...",
-    "TERMINAL POWER STATE // OFFLINE"
-  ];
+  playCrtShutdownEffect();
 
-  var ids = ["shutdownLine1", "shutdownLine2", "shutdownLine3", "shutdownLine4", "shutdownLine5"];
-  var currentLine = 0;
+  setTimeout(function () {
+    shutdownOverlay.classList.add("active");
+    shutdownOverlay.setAttribute("aria-hidden", "false");
 
-  function writeNextShutdownLine() {
-    if (currentLine >= lines.length) {
-      var finalEl = document.getElementById("shutdownFinal");
-      if (finalEl) {
-        setTimeout(function() {
-          finalEl.classList.add("visible");
-        }, 180);
+    var lines = [
+      "CLOSING ACTIVE SESSION...",
+      "REVOKING OPERATOR ACCESS...",
+      "UNMOUNTING ARCHIVE REGISTRY...",
+      "SEALING INTERNAL NODE...",
+      "TERMINAL POWER STATE // OFFLINE"
+    ];
+
+    var ids = ["shutdownLine1", "shutdownLine2", "shutdownLine3", "shutdownLine4", "shutdownLine5"];
+    var currentLine = 0;
+
+    function writeNextShutdownLine() {
+      if (currentLine >= lines.length) {
+        var finalEl = document.getElementById("shutdownFinal");
+        if (finalEl) {
+          setTimeout(function() {
+            finalEl.classList.add("visible");
+          }, 180);
+        }
+        return;
       }
-      return;
+
+      var el = document.getElementById(ids[currentLine]);
+      if (!el) {
+        currentLine++;
+        writeNextShutdownLine();
+        return;
+      }
+
+      el.classList.add("visible");
+
+      typeText(el, lines[currentLine], 18, function () {
+        currentLine++;
+        setTimeout(writeNextShutdownLine, 120);
+      });
     }
 
-    var el = document.getElementById(ids[currentLine]);
-    if (!el) {
-      currentLine++;
-      writeNextShutdownLine();
-      return;
-    }
-
-    el.classList.add("visible");
-
-    typeText(el, lines[currentLine], 18, function () {
-      currentLine++;
-      setTimeout(writeNextShutdownLine, 120);
-    });
-  }
-
-  writeNextShutdownLine();
+    writeNextShutdownLine();
+  }, 220);
 }
 
 window.addEventListener("resize", function () {
