@@ -204,7 +204,7 @@ body::after {
   border: 1px solid var(--line-soft);
   background: rgba(255,255,255,0.012);
   padding: 12px;
-  margin-top: 12px;
+  margin-top: 16px;
   border-radius: 0;
   box-shadow: inset 0 0 0 1px rgba(255,255,255,0.008);
 }
@@ -418,7 +418,7 @@ body::after {
 .terminal-divider {
   position: relative;
   height: 12px;
-  margin: 16px 0;
+  margin: 22px 0 18px;
   overflow: hidden;
   pointer-events: none;
 }
@@ -669,6 +669,8 @@ body::after {
 
   .mission-meta-grid {
     grid-template-columns: 1fr;
+    margin-top: 18px;
+    margin-bottom: 8px;
   }
 
   .op-row span:last-child {
