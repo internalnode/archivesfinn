@@ -2,8 +2,15 @@ var currentIndex = 0;
 var bootRunning = false;
 
 /* =========================
-   GESTION SCROLL INTELLIGENT
+   GESTION SCROLL MOBILE
 ========================= */
+
+function getViewportHeight() {
+  if (window.visualViewport && window.visualViewport.height) {
+    return window.visualViewport.height;
+  }
+  return window.innerHeight;
+}
 
 function updateScrollLock() {
   var screens = document.querySelectorAll(".screen");
@@ -12,15 +19,23 @@ function updateScrollLock() {
   var activeScreen = screens[currentIndex];
   var card = activeScreen.querySelector(".card") || activeScreen;
 
-  var contentHeight = card.scrollHeight;
-  var viewportHeight = window.innerHeight;
+  var contentHeight = Math.ceil(card.getBoundingClientRect().height);
+  var viewportHeight = Math.ceil(getViewportHeight());
 
-  if (contentHeight <= viewportHeight - 10) {
+  var shouldLock = contentHeight <= viewportHeight - 6;
+
+  if (shouldLock) {
     document.documentElement.style.overflowY = "hidden";
     document.body.style.overflowY = "hidden";
+    document.body.style.overscrollBehaviorY = "none";
+    document.documentElement.style.overscrollBehaviorY = "none";
+    document.body.style.touchAction = "manipulation";
   } else {
     document.documentElement.style.overflowY = "auto";
     document.body.style.overflowY = "auto";
+    document.body.style.overscrollBehaviorY = "auto";
+    document.documentElement.style.overscrollBehaviorY = "auto";
+    document.body.style.touchAction = "auto";
   }
 }
 
@@ -29,7 +44,17 @@ function forceScrollTop() {
   document.body.scrollTop = 0;
   document.documentElement.scrollTop = 0;
 
-  requestAnimationFrame(() => window.scrollTo(0, 0));
+  requestAnimationFrame(function () {
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  });
+
+  setTimeout(function () {
+    window.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }, 60);
 }
 
 /* =========================
@@ -45,7 +70,13 @@ function goTo(index) {
 
   forceScrollTop();
 
-  setTimeout(updateScrollLock, 60);
+  requestAnimationFrame(function () {
+    updateScrollLock();
+  });
+
+  setTimeout(function () {
+    updateScrollLock();
+  }, 80);
 }
 
 /* =========================
@@ -125,7 +156,6 @@ function bootTo(index) {
 
         forceScrollTop();
         updateScrollLock();
-
       }, 260);
       return;
     }
@@ -179,12 +209,13 @@ function openMission(key) {
     updateScrollLock();
 
     typeText(contextEl, mission.context, 8, function () {
-
       var i = 0;
 
       function addNext() {
         if (i >= mission.timeline.length) {
-          typeText(outcomeEl, mission.outcome, 8, updateScrollLock);
+          typeText(outcomeEl, mission.outcome, 8, function () {
+            updateScrollLock();
+          });
           return;
         }
 
@@ -209,6 +240,15 @@ function openMission(key) {
 ========================= */
 
 window.addEventListener("resize", updateScrollLock);
+
+if (window.visualViewport) {
+  window.visualViewport.addEventListener("resize", updateScrollLock);
+  window.visualViewport.addEventListener("scroll", function () {
+    if (document.documentElement.style.overflowY === "hidden") {
+      forceScrollTop();
+    }
+  });
+}
 
 window.onload = function () {
   goTo(0);
