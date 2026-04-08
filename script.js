@@ -2,6 +2,69 @@ var currentIndex = 0;
 var bootRunning = false;
 var terminalLocked = false;
 
+var loadingPresets = {
+  login: {
+    title: "BOOT SEQUENCE // SESSION AUTHENTICATION",
+    lines: [
+      "INITIALIZING SECURE SESSION...",
+      "VERIFYING ACCESS TOKEN...",
+      "CONNECTING TO INTERNAL NODE...",
+      "MOUNTING OPERATOR FILE...",
+      "SESSION VALIDATED."
+    ]
+  },
+  operations: {
+    title: "ARCHIVE ACCESS // OPERATIONS REGISTRY",
+    lines: [
+      "CLOSING OPERATOR FILE VIEW...",
+      "REQUESTING ARCHIVE ACCESS...",
+      "VERIFYING CLEARANCE LEVEL...",
+      "MOUNTING OPERATIONS REGISTRY...",
+      "ARCHIVE READY."
+    ]
+  },
+  operationsReturn: {
+    title: "ARCHIVE ACCESS // OPERATIONS REGISTRY",
+    lines: [
+      "CLOSING MISSION FILE...",
+      "RETURNING TO ARCHIVE INDEX...",
+      "VERIFYING SESSION INTEGRITY...",
+      "RESTORING OPERATIONS REGISTRY...",
+      "ARCHIVE READY."
+    ]
+  },
+  operator: {
+    title: "PROFILE ACCESS // OPERATOR FILE",
+    lines: [
+      "CLOSING ARCHIVE VIEW...",
+      "RESTORING OPERATOR FILE...",
+      "VERIFYING LOCAL SESSION...",
+      "LOADING PERSONNEL RECORD...",
+      "OPERATOR FILE READY."
+    ]
+  },
+  mission: {
+    title: "FILE ACCESS // OPERATION DOSSIER",
+    lines: [
+      "REQUESTING MISSION FILE...",
+      "DECRYPTING ARCHIVED ENTRY...",
+      "VERIFYING DOCUMENT INTEGRITY...",
+      "LOADING FIELD REPORT...",
+      "MISSION FILE READY."
+    ]
+  },
+  default: {
+    title: "BOOT SEQUENCE // SESSION AUTHENTICATION",
+    lines: [
+      "INITIALIZING SECURE SESSION...",
+      "VERIFYING ACCESS TOKEN...",
+      "CONNECTING TO INTERNAL NODE...",
+      "MOUNTING ARCHIVE REGISTRY...",
+      "SESSION VALIDATED."
+    ]
+  }
+};
+
 function getScrollBox(index) {
   var screens = document.querySelectorAll(".screen");
   if (!screens[index]) return null;
@@ -119,17 +182,28 @@ function typeText(element, text, speed, callback) {
   step();
 }
 
-function bootTo(index) {
+function bootTo(index, presetName) {
   if (terminalLocked) return;
   if (bootRunning) return;
   if (index === currentIndex) return;
 
   var overlay = document.getElementById("loadingOverlay");
   var bar = document.getElementById("progressBar");
+  var titleEl = document.getElementById("loadingTitle");
 
   if (!overlay || !bar) {
     goTo(index);
     return;
+  }
+
+  var preset = loadingPresets[presetName] || loadingPresets.default;
+  var lines = preset.lines;
+  var ids = ["line1", "line2", "line3", "line4", "line5"];
+  var progress = [18, 39, 62, 84, 100];
+  var currentLine = 0;
+
+  if (titleEl) {
+    titleEl.textContent = preset.title;
   }
 
   bootRunning = true;
@@ -146,18 +220,6 @@ function bootTo(index) {
       }, delay);
     })(180 + Math.floor(Math.random() * 700));
   }
-
-  var lines = [
-    "INITIALIZING SECURE SESSION...",
-    "VERIFYING ACCESS TOKEN...",
-    "CONNECTING TO INTERNAL NODE...",
-    "MOUNTING ARCHIVE REGISTRY...",
-    "SESSION VALIDATED."
-  ];
-
-  var ids = ["line1", "line2", "line3", "line4", "line5"];
-  var progress = [18, 39, 62, 84, 100];
-  var currentLine = 0;
 
   function writeNextLine() {
     if (currentLine >= lines.length) {
@@ -220,7 +282,7 @@ function openMission(key) {
   if (timelineEl) timelineEl.innerHTML = "";
 
   scrollScreenTop(3);
-  bootTo(3);
+  bootTo(3, "mission");
 
   setTimeout(function () {
     if (terminalLocked) return;

@@ -142,8 +142,8 @@ body::after {
 
 .card-actions {
   flex: 0 0 auto;
-  padding: 0 16px 16px;
-  border-top: 1px solid rgba(255,255,255,0.04);
+  padding: 12px 16px 16px;
+  border-top: none;
   background:
     linear-gradient(180deg, rgba(255,255,255,0.004) 0%, rgba(255,255,255,0.014) 100%);
   position: relative;
@@ -235,19 +235,15 @@ body::after {
   gap: 6px;
 }
 
-.mission-meta-grid .meta-box {
-  margin-top: 0;
-  }
-
-.mission-meta {
-    padding: 10px 12px;
-    border: 1px solid rgba(120, 160, 120, 0.15);
-  }
-
 .mission-meta-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 14px;
   margin-bottom: 0;
+}
+
+.mission-meta-grid .meta-box {
+  margin-top: 0;
+  padding: 10px 12px;
 }
 
 .meta-label,
@@ -648,8 +644,8 @@ body::after {
     top: max(10px, env(safe-area-inset-top));
   }
 
- .card-head {
-  padding: 14px 14px 12px;
+  .card-head {
+    padding: 14px 14px 12px;
   }
 
   .card-body {
@@ -657,7 +653,8 @@ body::after {
   }
 
   .card-actions {
-    padding: 0 14px 14px;
+    padding: 12px 14px 14px;
+    border-top: none;
   }
 
   .loading-overlay,
@@ -683,8 +680,9 @@ body::after {
     margin-bottom: 8px;
   }
 
-   .mission-meta-grid .meta-box {
+  .mission-meta-grid .meta-box {
     margin-top: 0;
+    padding: 10px 12px;
   }
 
   .op-row span:last-child {
