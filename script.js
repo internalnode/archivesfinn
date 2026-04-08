@@ -272,51 +272,53 @@ function terminateSession() {
   lockTerminalPermanently();
   resetShutdown();
 
-  playCrtShutdownEffect();
+  shutdownOverlay.classList.add("active");
+  shutdownOverlay.setAttribute("aria-hidden", "false");
 
-  setTimeout(function () {
-    shutdownOverlay.classList.add("active");
-    shutdownOverlay.setAttribute("aria-hidden", "false");
+  var lines = [
+    "CLOSING ACTIVE SESSION...",
+    "REVOKING OPERATOR ACCESS...",
+    "UNMOUNTING ARCHIVE REGISTRY...",
+    "SEALING INTERNAL NODE...",
+    "SYSTEM SHUTDOWN CONFIRMED."
+  ];
 
-    var lines = [
-      "CLOSING ACTIVE SESSION...",
-      "REVOKING OPERATOR ACCESS...",
-      "UNMOUNTING ARCHIVE REGISTRY...",
-      "SEALING INTERNAL NODE...",
-      "TERMINAL POWER STATE // OFFLINE"
-    ];
+  var ids = ["shutdownLine1", "shutdownLine2", "shutdownLine3", "shutdownLine4", "shutdownLine5"];
+  var currentLine = 0;
 
-    var ids = ["shutdownLine1", "shutdownLine2", "shutdownLine3", "shutdownLine4", "shutdownLine5"];
-    var currentLine = 0;
-
-    function writeNextShutdownLine() {
-      if (currentLine >= lines.length) {
-        var finalEl = document.getElementById("shutdownFinal");
-        if (finalEl) {
-          setTimeout(function() {
-            finalEl.classList.add("visible");
-          }, 180);
-        }
-        return;
+  function writeNextShutdownLine() {
+    if (currentLine >= lines.length) {
+      var finalEl = document.getElementById("shutdownFinal");
+      if (finalEl) {
+        setTimeout(function () {
+          finalEl.classList.add("visible");
+        }, 120);
       }
 
-      var el = document.getElementById(ids[currentLine]);
-      if (!el) {
-        currentLine++;
-        writeNextShutdownLine();
-        return;
-      }
+      /* FLASH / EXTINCTION APRÈS LE MESSAGE SYSTEM SHUTDOWN */
+      setTimeout(function () {
+        playCrtShutdownEffect();
+      }, 650);
 
-      el.classList.add("visible");
-
-      typeText(el, lines[currentLine], 18, function () {
-        currentLine++;
-        setTimeout(writeNextShutdownLine, 120);
-      });
+      return;
     }
 
-    writeNextShutdownLine();
-  }, 220);
+    var el = document.getElementById(ids[currentLine]);
+    if (!el) {
+      currentLine++;
+      writeNextShutdownLine();
+      return;
+    }
+
+    el.classList.add("visible");
+
+    typeText(el, lines[currentLine], 18, function () {
+      currentLine++;
+      setTimeout(writeNextShutdownLine, 120);
+    });
+  }
+
+  writeNextShutdownLine();
 }
 
 window.addEventListener("resize", function () {
