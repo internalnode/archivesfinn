@@ -54,7 +54,7 @@
 
             <div class="card-actions">
               <div class="btn-row">
-                <button type="button" class="btn btn-primary" onclick="bootTo(1, 'login')">AUTHENTICATE SESSION</button>
+                <button type="button" class="btn btn-primary" onclick="bootTo(1)">AUTHENTICATE SESSION</button>
               </div>
             </div>
           </div>
@@ -134,7 +134,7 @@
 
             <div class="card-actions">
               <div class="btn-row">
-                <button type="button" class="btn btn-primary" onclick="bootTo(2, 'operations')">LOAD OPERATIONS ARCHIVE</button>
+                <button type="button" class="btn btn-primary" onclick="bootTo(2)">LOAD OPERATIONS ARCHIVE</button>
                 <button type="button" class="btn" onclick="terminateSession()">TERMINATE SESSION</button>
               </div>
             </div>
@@ -200,7 +200,7 @@
 
             <div class="card-actions">
               <div class="btn-row">
-                <button type="button" class="btn" onclick="bootTo(1, 'operator')">RETURN TO OPERATOR FILE</button>
+                <button type="button" class="btn" onclick="bootTo(1)">RETURN TO OPERATOR FILE</button>
               </div>
             </div>
           </div>
@@ -261,7 +261,7 @@
 
             <div class="card-actions">
               <div class="btn-row">
-                <button type="button" class="btn" onclick="bootTo(2, 'operationsReturn')">RETURN TO OPERATIONS</button>
+                <button type="button" class="btn" onclick="bootTo(2)">RETURN TO OPERATIONS</button>
               </div>
             </div>
           </div>
@@ -270,7 +270,7 @@
       </div>
 
       <div class="loading-overlay" id="loadingOverlay">
-        <div class="loading-title terminal-prompt" id="loadingTitle">BOOT SEQUENCE // SESSION AUTHENTICATION</div>
+        <div class="loading-title terminal-prompt">BOOT SEQUENCE // SESSION AUTHENTICATION</div>
 
         <div class="loading-lines">
           <div class="loading-line" id="line1"></div>
