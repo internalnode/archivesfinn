@@ -103,7 +103,7 @@ body::after {
   overflow: hidden;
   box-shadow:
     inset 0 0 0 1px rgba(255,255,255,0.012),
-    0 10px 25px var(--shadow);
+    0 6px 14px rgba(0,0,0,0.25);
 }
 
 .card::after {
