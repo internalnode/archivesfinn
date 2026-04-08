@@ -1,5 +1,6 @@
 var currentIndex = 0;
 var bootRunning = false;
+var terminalLocked = false;
 
 function getScrollBox(index) {
   var screens = document.querySelectorAll(".screen");
@@ -23,6 +24,8 @@ function scrollScreenTop(index) {
 }
 
 function goTo(index) {
+  if (terminalLocked) return;
+
   var track = document.getElementById("track");
   if (!track) return;
 
@@ -43,6 +46,22 @@ function resetLoading() {
       el.classList.remove("visible");
       el.textContent = "";
     }
+  }
+}
+
+function resetShutdown() {
+  var ids = ["shutdownLine1", "shutdownLine2", "shutdownLine3", "shutdownLine4", "shutdownLine5"];
+  for (var i = 0; i < ids.length; i++) {
+    var el = document.getElementById(ids[i]);
+    if (el) {
+      el.classList.remove("visible");
+      el.textContent = "";
+    }
+  }
+
+  var finalEl = document.getElementById("shutdownFinal");
+  if (finalEl) {
+    finalEl.classList.remove("visible");
   }
 }
 
@@ -69,6 +88,7 @@ function typeText(element, text, speed, callback) {
 }
 
 function bootTo(index) {
+  if (terminalLocked) return;
   if (bootRunning) return;
   if (index === currentIndex) return;
 
@@ -110,7 +130,9 @@ function bootTo(index) {
   function writeNextLine() {
     if (currentLine >= lines.length) {
       setTimeout(function () {
-        goTo(index);
+        if (!terminalLocked) {
+          goTo(index);
+        }
         overlay.classList.remove("active");
         bootRunning = false;
         scrollScreenTop(index);
@@ -138,6 +160,8 @@ function bootTo(index) {
 }
 
 function openMission(key) {
+  if (terminalLocked) return;
+
   var mission = missions[key];
   if (!mission) return;
 
@@ -167,12 +191,16 @@ function openMission(key) {
   bootTo(3);
 
   setTimeout(function () {
+    if (terminalLocked) return;
+
     scrollScreenTop(3);
 
     typeText(contextEl, mission.context, 8, function () {
       var i = 0;
 
       function addNext() {
+        if (terminalLocked) return;
+
         if (i >= mission.timeline.length) {
           typeText(outcomeEl, mission.outcome, 8);
           return;
@@ -193,9 +221,90 @@ function openMission(key) {
   }, 500);
 }
 
+function lockTerminalPermanently() {
+  terminalLocked = true;
+
+  document.body.classList.add("terminal-dead");
+
+  var app = document.querySelector(".app");
+  if (app) {
+    app.style.pointerEvents = "none";
+  }
+
+  window.onbeforeunload = null;
+}
+
+function terminateSession() {
+  if (terminalLocked || bootRunning) return;
+
+  var shutdownOverlay = document.getElementById("shutdownOverlay");
+  if (!shutdownOverlay) return;
+
+  lockTerminalPermanently();
+  resetShutdown();
+  shutdownOverlay.classList.add("active");
+  shutdownOverlay.setAttribute("aria-hidden", "false");
+
+  var lines = [
+    "CLOSING ACTIVE SESSION...",
+    "REVOKING OPERATOR ACCESS...",
+    "UNMOUNTING ARCHIVE REGISTRY...",
+    "SEALING INTERNAL NODE...",
+    "TERMINAL POWER STATE // OFFLINE"
+  ];
+
+  var ids = ["shutdownLine1", "shutdownLine2", "shutdownLine3", "shutdownLine4", "shutdownLine5"];
+  var currentLine = 0;
+
+  function writeNextShutdownLine() {
+    if (currentLine >= lines.length) {
+      var finalEl = document.getElementById("shutdownFinal");
+      if (finalEl) {
+        setTimeout(function() {
+          finalEl.classList.add("visible");
+        }, 180);
+      }
+      return;
+    }
+
+    var el = document.getElementById(ids[currentLine]);
+    if (!el) {
+      currentLine++;
+      writeNextShutdownLine();
+      return;
+    }
+
+    el.classList.add("visible");
+
+    typeText(el, lines[currentLine], 18, function () {
+      currentLine++;
+      setTimeout(writeNextShutdownLine, 120);
+    });
+  }
+
+  writeNextShutdownLine();
+}
+
 window.addEventListener("resize", function () {
-  scrollScreenTop(currentIndex);
+  if (!terminalLocked) {
+    scrollScreenTop(currentIndex);
+  }
 });
+
+document.addEventListener("click", function (event) {
+  if (!terminalLocked) return;
+
+  var shutdownOverlay = document.getElementById("shutdownOverlay");
+  if (shutdownOverlay && shutdownOverlay.contains(event.target)) {
+    event.preventDefault();
+    event.stopPropagation();
+  }
+}, true);
+
+document.addEventListener("keydown", function (event) {
+  if (!terminalLocked) return;
+  event.preventDefault();
+}, true);
 
 window.onload = function () {
   goTo(0);

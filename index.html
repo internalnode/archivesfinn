@@ -65,7 +65,7 @@
           <div class="card card-app">
             <div class="card-head">
               <div class="system-line terminal-prompt">
-                ACCESS GRANTED // OPERATOR FILE LOADED
+                ACCESS GRANTED // OPERATOR DOSSIER LOADED
               </div>
 
               <h1 class="title">OPERATOR PROFILE</h1>
@@ -135,7 +135,7 @@
             <div class="card-actions">
               <div class="btn-row">
                 <button type="button" class="btn btn-primary" onclick="bootTo(2)">LOAD OPERATIONS ARCHIVE</button>
-                <button type="button" class="btn" onclick="bootTo(0)">TERMINATE SESSION</button>
+                <button type="button" class="btn" onclick="terminateSession()">TERMINATE SESSION</button>
               </div>
             </div>
           </div>
@@ -200,7 +200,7 @@
 
             <div class="card-actions">
               <div class="btn-row">
-                <button type="button" class="btn" onclick="bootTo(1)">RETURN TO OPERATOR FILE</button>
+                <button type="button" class="btn" onclick="bootTo(1)">RETURN TO DOSSIER</button>
               </div>
             </div>
           </div>
@@ -285,6 +285,22 @@
         </div>
 
         <div class="loading-footer terminal-cursor">PROCESSING</div>
+      </div>
+
+      <div class="shutdown-overlay" id="shutdownOverlay" aria-hidden="true">
+        <div class="shutdown-box">
+          <div class="shutdown-title terminal-prompt">TERMINAL SHUTDOWN</div>
+
+          <div class="shutdown-lines">
+            <div class="shutdown-line" id="shutdownLine1"></div>
+            <div class="shutdown-line" id="shutdownLine2"></div>
+            <div class="shutdown-line" id="shutdownLine3"></div>
+            <div class="shutdown-line" id="shutdownLine4"></div>
+            <div class="shutdown-line" id="shutdownLine5"></div>
+          </div>
+
+          <div class="shutdown-final" id="shutdownFinal">SYSTEM OFFLINE</div>
+        </div>
       </div>
     </div>
   </div>

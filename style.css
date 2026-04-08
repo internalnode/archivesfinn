@@ -463,7 +463,8 @@ body::after {
   50%, 100% { opacity: 0; }
 }
 
-.loading-overlay {
+.loading-overlay,
+.shutdown-overlay {
   position: absolute;
   inset: 0;
   background: rgba(6, 8, 6, 0.98);
@@ -471,14 +472,16 @@ body::after {
   border-radius: 2px;
   padding: 16px;
   display: none;
-  z-index: 20;
+  z-index: 30;
 }
 
-.loading-overlay.active {
+.loading-overlay.active,
+.shutdown-overlay.active {
   display: block;
 }
 
-.loading-title {
+.loading-title,
+.shutdown-title {
   color: var(--alert);
   font-size: 11px;
   margin-bottom: 14px;
@@ -487,12 +490,14 @@ body::after {
   text-transform: uppercase;
 }
 
-.loading-lines {
+.loading-lines,
+.shutdown-lines {
   display: grid;
   gap: 8px;
 }
 
-.loading-line {
+.loading-line,
+.shutdown-line {
   color: var(--muted);
   font-size: 12px;
   opacity: 0;
@@ -500,7 +505,8 @@ body::after {
   min-height: 1.2em;
 }
 
-.loading-line.visible {
+.loading-line.visible,
+.shutdown-line.visible {
   opacity: 1;
 }
 
@@ -525,6 +531,27 @@ body::after {
   font-size: 11px;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+.shutdown-box {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.shutdown-final {
+  margin-top: auto;
+  color: var(--danger);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.shutdown-final.visible {
+  opacity: 1;
 }
 
 .loading-overlay.glitch {
@@ -557,6 +584,11 @@ body::after {
 
   .card-actions {
     padding: 0 14px 14px;
+  }
+
+  .loading-overlay,
+  .shutdown-overlay {
+    padding: 14px;
   }
 
   .file-top,
