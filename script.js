@@ -295,10 +295,9 @@ function terminateSession() {
         }, 120);
       }
 
-      /* FLASH / EXTINCTION APRÈS LE MESSAGE SYSTEM SHUTDOWN */
       setTimeout(function () {
         playCrtShutdownEffect();
-      }, 650);
+      }, 1200);
 
       return;
     }
@@ -314,7 +313,7 @@ function terminateSession() {
 
     typeText(el, lines[currentLine], 18, function () {
       currentLine++;
-      setTimeout(writeNextShutdownLine, 120);
+      setTimeout(writeNextShutdownLine, 180);
     });
   }
 
