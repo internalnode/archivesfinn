@@ -1,5 +1,6 @@
 var missions = {
   nightfall: {
+    state: "CLOSED",
     system: "OPERATION FILE // NIGHTFALL // CLASSIFIED",
     title: "NIGHTFALL",
     sub: "FILE // 2019 • STATE // CLOSED",
@@ -20,6 +21,7 @@ var missions = {
   },
 
   blackridge: {
+    state: "ARCHIVED",
     system: "OPERATION FILE // BLACKRIDGE // RESTRICTED",
     title: "BLACKRIDGE",
     sub: "FILE // 2021 • STATE // ARCHIVED",
@@ -41,6 +43,7 @@ var missions = {
   },
 
   silent_echo: {
+    state: "RESTRICTED",
     system: "OPERATION FILE // SILENT ECHO // HIGHLY RESTRICTED",
     title: "SILENT ECHO",
     sub: "FILE // 2023 • STATE // RESTRICTED",
@@ -62,6 +65,7 @@ var missions = {
   },
 
   cold_veil: {
+    state: "CLOSED",
     system: "OPERATION FILE // COLD VEIL // CLASSIFIED",
     title: "COLD VEIL",
     sub: "FILE // 2023 • STATE // CLOSED",
@@ -82,6 +86,7 @@ var missions = {
   },
 
   iron_harbor: {
+    state: "ARCHIVED",
     system: "OPERATION FILE // IRON HARBOR // RESTRICTED",
     title: "IRON HARBOR",
     sub: "FILE // 2024 • STATE // ARCHIVED",
@@ -103,6 +108,7 @@ var missions = {
   },
 
   ember_fall: {
+    state: "RESTRICTED",
     system: "OPERATION FILE // EMBER FALL // HIGHLY RESTRICTED",
     title: "EMBER FALL",
     sub: "FILE // 2025 • STATE // RESTRICTED",
