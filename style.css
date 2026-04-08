@@ -122,7 +122,7 @@ body::after {
 
 .card-head {
   flex: 0 0 auto;
-  padding: 16px 16px 0;
+  padding: 16px 16px 14px;
   border-bottom: 1px solid rgba(255,255,255,0.04);
   background:
     linear-gradient(180deg, rgba(255,255,255,0.014) 0%, rgba(255,255,255,0.004) 100%);
@@ -238,7 +238,7 @@ body::after {
 .mission-meta-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   margin-top: 14px;
-  margin-bottom: 2px;
+  margin-bottom: 0;
 }
 
 .meta-label,
@@ -639,8 +639,8 @@ body::after {
     top: max(10px, env(safe-area-inset-top));
   }
 
-  .card-head {
-    padding: 14px 14px 0;
+ .card-head {
+  padding: 14px 14px 12px;
   }
 
   .card-body {
