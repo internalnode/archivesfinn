@@ -37,4 +37,27 @@ var missions = {
       "Collecte de documents, supports numériques et éléments de traçabilité avant arrivée possible de renforts hostiles.",
       "Extraction immédiate de l’équipe avec repli complet avant réactivation des voies d’accès secondaires."
     ],
-    outcome: "Installation neutralisée et rendue inopérante. Plusieurs données techniques récupérées ont ensuite été transférées au commandement UKSF pour exploitation approfondie. Le site est désormais classé comme infrastructure clandestine hostile démantelé[... ELLIPSIZATION ...]ั่ว"}
+    outcome: "Installation neutralisée et rendue inopérante. Plusieurs données techniques récupérées ont ensuite été transférées au commandement UKSF pour exploitation approfondie. Le site est désormais classé comme infrastructure clandestine hostile démantelée."
+  },
+
+  silent_echo: {
+    system: "OPERATION FILE // SILENT ECHO // HIGHLY RESTRICTED",
+    title: "SILENT ECHO",
+    sub: "FILE // 2023 • STATE // RESTRICTED",
+    clearance: "BLACK",
+    theatre: "SUBTERRANEAN",
+    risk: "UNKNOWN",
+    context: "Mission de récupération d’un dispositif sensible conduite en environnement fermé, souterrain et partiellement cartographié. Les renseignements disponibles avant engagement restaient fragmentaires, et plusieurs indicateurs laissaient supposer une présence inconnue ou des systèmes actifs non identifiés dans la structure.",
+    timeline: [
+      "Approche discrète et entrée contrôlée dans une infrastructure souterraine à accès restreint.",
+      "Progression lente dans un environnement confiné marqué par une visibilité réduite et des perturbations matérielles intermittentes.",
+      "Perte volontaire de communications externes pendant trente-deux minutes afin de limiter toute interception ou toute compromission du déplacement.",
+      "Localisation du dispositif prioritaire dans une section interne sécurisée, distincte du point estimé initialement.",
+      "Détection de perturbations systèmes non identifiées affectant brièvement les capteurs et les procédures de contrôle.",
+      "Réévaluation immédiate de la situation tactique et abandon de plusieurs objectifs secondaires pour préserver l’intégrité de l’élément récupéré.",
+      "Extraction d’urgence selon protocole raccourci, avec fermeture prématurée de la fenêtre d’exploitation du site.",
+      "Évacuation complète de l’équipe sans maintien sur zone et transmission scellée de l’objet aux autorités compétentes."
+    ],
+    outcome: "Dispositif récupéré et remis sous contrôle sécurisé. Le rapport complet demeure partiellement compartimenté ; plusieurs segments de l’opération restent scellés à diffusion restreinte. Des anomalies relevées sur site n’ont pas été intégralement clarifiées dans la version consultable du dossier."
+  }
+};
