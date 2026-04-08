@@ -20,8 +20,8 @@
 
         <!-- SCREEN 1 -->
         <section class="screen">
-          <div class="screen-scroll">
-            <div class="card">
+          <div class="card card-app">
+            <div class="card-head">
               <div class="system-line terminal-prompt">
                 NODE // UKSF INTERNAL ACCESS PORTAL • SECURITY LAYER ONLINE
               </div>
@@ -35,7 +35,9 @@
               <div class="sub">
                 SESSION FLAGGED // EXTERNAL ACCESS ATTEMPT // TRACE ENABLED
               </div>
+            </div>
 
+            <div class="card-body screen-scroll">
               <div class="alert-box">
                 <div class="alert-box-title">SECURITY NOTICE</div>
                 Tentative d’accès non reconnue détectée sur le nœud interne.
@@ -48,7 +50,9 @@
                 Toute interaction est consignée. L’accès au dossier opératif reste soumis à validation
                 de session et ouverture sécurisée du registre interne.
               </p>
+            </div>
 
+            <div class="card-actions">
               <div class="btn-row">
                 <button type="button" class="btn btn-primary" onclick="bootTo(1)">AUTHENTICATE SESSION</button>
               </div>
@@ -58,8 +62,8 @@
 
         <!-- SCREEN 2 -->
         <section class="screen">
-          <div class="screen-scroll">
-            <div class="card">
+          <div class="card card-app">
+            <div class="card-head">
               <div class="system-line terminal-prompt">
                 ACCESS GRANTED // OPERATOR FILE LOADED
               </div>
@@ -69,7 +73,9 @@
               <div class="sub">
                 UKSF INTERNAL PERSONNEL RECORD // ACTIVE ENTRY
               </div>
+            </div>
 
+            <div class="card-body screen-scroll">
               <div class="terminal-divider"></div>
 
               <div class="operator-grid">
@@ -124,9 +130,9 @@
                   <span>PARTIALLY SEALED</span>
                 </div>
               </div>
+            </div>
 
-              <div class="terminal-divider"></div>
-
+            <div class="card-actions">
               <div class="btn-row">
                 <button type="button" class="btn btn-primary" onclick="bootTo(2)">LOAD OPERATIONS ARCHIVE</button>
                 <button type="button" class="btn" onclick="bootTo(0)">TERMINATE SESSION</button>
@@ -137,12 +143,14 @@
 
         <!-- SCREEN 3 -->
         <section class="screen">
-          <div class="screen-scroll">
-            <div class="card">
+          <div class="card card-app">
+            <div class="card-head">
               <div class="system-line terminal-prompt">
                 OPERATIONS REGISTRY // INTERNAL ARCHIVE
               </div>
+            </div>
 
+            <div class="card-body screen-scroll">
               <div class="file" onclick="openMission('nightfall')">
                 <div class="file-top">
                   <span>FILE // 2020 // DUSTLINE</span>
@@ -188,7 +196,9 @@
                   <span>RISK // UNKNOWN</span>
                 </div>
               </div>
+            </div>
 
+            <div class="card-actions">
               <div class="btn-row">
                 <button type="button" class="btn" onclick="bootTo(1)">RETURN TO OPERATOR FILE</button>
               </div>
@@ -198,8 +208,8 @@
 
         <!-- SCREEN 4 -->
         <section class="screen">
-          <div class="screen-scroll">
-            <div class="card">
+          <div class="card card-app">
+            <div class="card-head">
               <div class="system-line terminal-prompt" id="detailSystemLine">
                 OPERATION FILE // LOADED
               </div>
@@ -224,9 +234,9 @@
                   <div class="meta-value" id="detailRisk">—</div>
                 </div>
               </div>
+            </div>
 
-              <div class="terminal-divider"></div>
-
+            <div class="card-body screen-scroll">
               <div class="detail-grid">
                 <div class="detail-box">
                   <div class="detail-kicker">CONTEXT</div>
@@ -247,7 +257,9 @@
                   <p id="detailOutcome">—</p>
                 </div>
               </div>
+            </div>
 
+            <div class="card-actions">
               <div class="btn-row">
                 <button type="button" class="btn" onclick="bootTo(2)">RETURN TO OPERATIONS</button>
               </div>

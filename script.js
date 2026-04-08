@@ -1,14 +1,14 @@
 var currentIndex = 0;
 var bootRunning = false;
 
-function getScreenScroll(index) {
+function getScrollBox(index) {
   var screens = document.querySelectorAll(".screen");
   if (!screens[index]) return null;
   return screens[index].querySelector(".screen-scroll");
 }
 
 function scrollScreenTop(index) {
-  var scrollBox = getScreenScroll(index);
+  var scrollBox = getScrollBox(index);
   if (!scrollBox) return;
 
   scrollBox.scrollTop = 0;
@@ -174,9 +174,7 @@ function openMission(key) {
 
       function addNext() {
         if (i >= mission.timeline.length) {
-          typeText(outcomeEl, mission.outcome, 8, function () {
-            scrollScreenTop(3);
-          });
+          typeText(outcomeEl, mission.outcome, 8);
           return;
         }
 
