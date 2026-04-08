@@ -1,22 +1,24 @@
 var currentIndex = 0;
 var bootRunning = false;
 
-function getActiveScreen() {
+function getScreen(index) {
   var screens = document.querySelectorAll(".screen");
-  return screens[currentIndex] || null;
+  return screens[index] || null;
 }
 
-function getActiveScrollable() {
-  var screen = getActiveScreen();
-  if (!screen) return null;
-  return screen.querySelector(".card-scroll");
-}
+function scrollScreenTop(index) {
+  var screen = getScreen(index);
+  if (!screen) return;
 
-function resetActiveScroll() {
-  var scrollable = getActiveScrollable();
-  if (scrollable) {
-    scrollable.scrollTop = 0;
-  }
+  screen.scrollTop = 0;
+
+  requestAnimationFrame(function () {
+    screen.scrollTop = 0;
+  });
+
+  setTimeout(function () {
+    screen.scrollTop = 0;
+  }, 60);
 }
 
 function goTo(index) {
@@ -26,13 +28,7 @@ function goTo(index) {
   currentIndex = index;
   track.style.transform = "translateX(-" + (index * 25) + "%)";
 
-  requestAnimationFrame(function () {
-    resetActiveScroll();
-  });
-
-  setTimeout(function () {
-    resetActiveScroll();
-  }, 50);
+  scrollScreenTop(index);
 }
 
 function resetLoading() {
@@ -87,6 +83,17 @@ function bootTo(index) {
   resetLoading();
   overlay.classList.add("active");
 
+  var glitchCount = 1 + Math.floor(Math.random() * 2);
+  for (var g = 0; g < glitchCount; g++) {
+    (function(delay) {
+      setTimeout(function() {
+        overlay.classList.remove("glitch");
+        void overlay.offsetWidth;
+        overlay.classList.add("glitch");
+      }, delay);
+    })(180 + Math.floor(Math.random() * 700));
+  }
+
   var lines = [
     "INITIALIZING SECURE SESSION...",
     "VERIFYING ACCESS TOKEN...",
@@ -105,6 +112,7 @@ function bootTo(index) {
         goTo(index);
         overlay.classList.remove("active");
         bootRunning = false;
+        scrollScreenTop(index);
       }, 260);
       return;
     }
@@ -154,17 +162,20 @@ function openMission(key) {
   if (outcomeEl) outcomeEl.textContent = "";
   if (timelineEl) timelineEl.innerHTML = "";
 
+  scrollScreenTop(3);
   bootTo(3);
 
   setTimeout(function () {
-    resetActiveScroll();
+    scrollScreenTop(3);
 
     typeText(contextEl, mission.context, 8, function () {
       var i = 0;
 
       function addNext() {
         if (i >= mission.timeline.length) {
-          typeText(outcomeEl, mission.outcome, 8);
+          typeText(outcomeEl, mission.outcome, 8, function () {
+            scrollScreenTop(3);
+          });
           return;
         }
 
@@ -179,9 +190,15 @@ function openMission(key) {
 
       addNext();
     });
+
   }, 500);
 }
 
+window.addEventListener("resize", function () {
+  scrollScreenTop(currentIndex);
+});
+
 window.onload = function () {
   goTo(0);
+  scrollScreenTop(0);
 };
