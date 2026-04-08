@@ -56,13 +56,10 @@ body::after {
 }
 
 .app {
-  width: min(760px, calc(100% - 40px));
+  width: min(760px, calc(100% - 20px));
   height: 100dvh;
   margin: 0 auto;
-  padding:
-    max(14px, env(safe-area-inset-top))
-    0
-    max(14px, env(safe-area-inset-bottom));
+  padding: 10px 0;
 }
 
 .viewport {
@@ -88,7 +85,7 @@ body::after {
   overflow-y: auto;
   overscroll-behavior-y: contain;
   -webkit-overflow-scrolling: touch;
-  padding: 0 2px;
+  padding-right: 2px;
 }
 
 .card {
@@ -336,6 +333,7 @@ body::after {
   color: var(--accent);
 }
 
+/* OPERATOR PANEL */
 .operator-grid {
   display: grid;
   gap: 8px;
@@ -370,6 +368,7 @@ body::after {
   color: var(--accent-strong);
 }
 
+/* TERMINAL DIVIDER */
 .terminal-divider {
   position: relative;
   height: 12px;
@@ -401,6 +400,7 @@ body::after {
   padding-left: 8px;
 }
 
+/* TERMINAL */
 .terminal-prompt::before {
   content: ">> ";
   color: var(--accent);
@@ -419,6 +419,7 @@ body::after {
   50%, 100% { opacity: 0; }
 }
 
+/* loading */
 .loading-overlay {
   position: absolute;
   inset: 0;
@@ -502,18 +503,15 @@ body::after {
   }
 
   .app {
-    width: calc(100% - 40px);
+    width: calc(100% - 12px);
     height: 100dvh;
     margin: 0 auto;
-    padding:
-      max(12px, env(safe-area-inset-top))
-      0
-      max(12px, env(safe-area-inset-bottom));
+    padding: 6px 0;
   }
 
   .card,
   .loading-overlay {
-    padding: 14px;
+    padding: 13px;
   }
 
   .file-top,
