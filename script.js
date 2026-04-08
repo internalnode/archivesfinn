@@ -13,6 +13,7 @@ var loadingPresets = {
       "SESSION VALIDATED."
     ]
   },
+
   operations: {
     title: "ARCHIVE ACCESS // OPERATIONS REGISTRY",
     lines: [
@@ -23,6 +24,7 @@ var loadingPresets = {
       "ARCHIVE READY."
     ]
   },
+
   operationsReturn: {
     title: "ARCHIVE ACCESS // OPERATIONS REGISTRY",
     lines: [
@@ -33,6 +35,7 @@ var loadingPresets = {
       "ARCHIVE READY."
     ]
   },
+
   operator: {
     title: "PROFILE ACCESS // OPERATOR FILE",
     lines: [
@@ -43,7 +46,8 @@ var loadingPresets = {
       "OPERATOR FILE READY."
     ]
   },
-  mission: {
+
+  missionDefault: {
     title: "FILE ACCESS // OPERATION DOSSIER",
     lines: [
       "REQUESTING MISSION FILE...",
@@ -53,6 +57,73 @@ var loadingPresets = {
       "MISSION FILE READY."
     ]
   },
+
+  mission_nightfall: {
+    title: "FILE ACCESS // NIGHTFALL",
+    lines: [
+      "REQUESTING NIGHTFALL ARCHIVE...",
+      "VERIFYING BLACK CLEARANCE...",
+      "DECRYPTING URBAN FIELD REPORT...",
+      "RESTORING EXFILTRATION TIMELINE...",
+      "NIGHTFALL FILE READY."
+    ]
+  },
+
+  mission_blackridge: {
+    title: "FILE ACCESS // BLACKRIDGE",
+    lines: [
+      "REQUESTING BLACKRIDGE ARCHIVE...",
+      "VERIFYING RESTRICTED CLEARANCE...",
+      "MOUNTING MOUNTAIN SURVEILLANCE LOGS...",
+      "RESTORING SITE NEUTRALIZATION REPORT...",
+      "BLACKRIDGE FILE READY."
+    ]
+  },
+
+  mission_silent_echo: {
+    title: "FILE ACCESS // SILENT ECHO",
+    lines: [
+      "REQUESTING SILENT ECHO ARCHIVE...",
+      "VERIFYING BLACK CLEARANCE...",
+      "DECRYPTING SEALED SUBTERRANEAN ENTRY...",
+      "RESTORING COMPARTMENTED INCIDENT LOG...",
+      "SILENT ECHO FILE READY."
+    ]
+  },
+
+  mission_cold_veil: {
+    title: "FILE ACCESS // COLD VEIL",
+    lines: [
+      "REQUESTING COLD VEIL ARCHIVE...",
+      "VERIFYING MARITIME ACCESS CHANNEL...",
+      "DECRYPTING PORT INTERCEPTION REPORT...",
+      "RESTORING COASTAL EXTRACTION TIMELINE...",
+      "COLD VEIL FILE READY."
+    ]
+  },
+
+  mission_iron_harbor: {
+    title: "FILE ACCESS // IRON HARBOR",
+    lines: [
+      "REQUESTING IRON HARBOR ARCHIVE...",
+      "VERIFYING RESTRICTED CLEARANCE...",
+      "MOUNTING LOGISTICS SURVEILLANCE RECORDS...",
+      "RESTORING INTERCEPTION AND SEIZURE LOG...",
+      "IRON HARBOR FILE READY."
+    ]
+  },
+
+  mission_ember_fall: {
+    title: "FILE ACCESS // EMBER FALL",
+    lines: [
+      "REQUESTING EMBER FALL ARCHIVE...",
+      "VERIFYING BLACK CLEARANCE...",
+      "DECRYPTING INDUSTRIAL SABOTAGE REPORT...",
+      "RESTORING DELAYED FAILURE ASSESSMENT...",
+      "EMBER FALL FILE READY."
+    ]
+  },
+
   default: {
     title: "BOOT SEQUENCE // SESSION AUTHENTICATION",
     lines: [
@@ -64,6 +135,12 @@ var loadingPresets = {
     ]
   }
 };
+
+function getMissionPresetName(key) {
+  var presetName = "mission_" + key;
+  if (loadingPresets[presetName]) return presetName;
+  return "missionDefault";
+}
 
 function getScrollBox(index) {
   var screens = document.querySelectorAll(".screen");
@@ -282,7 +359,7 @@ function openMission(key) {
   if (timelineEl) timelineEl.innerHTML = "";
 
   scrollScreenTop(3);
-  bootTo(3, "mission");
+  bootTo(3, getMissionPresetName(key));
 
   setTimeout(function () {
     if (terminalLocked) return;
