@@ -1,6 +1,41 @@
 var currentIndex = 0;
 var bootRunning = false;
 
+/* =========================
+   GESTION SCROLL INTELLIGENT
+========================= */
+
+function updateScrollLock() {
+  var screens = document.querySelectorAll(".screen");
+  if (!screens.length || !screens[currentIndex]) return;
+
+  var activeScreen = screens[currentIndex];
+  var card = activeScreen.querySelector(".card") || activeScreen;
+
+  var contentHeight = card.scrollHeight;
+  var viewportHeight = window.innerHeight;
+
+  if (contentHeight <= viewportHeight - 10) {
+    document.documentElement.style.overflowY = "hidden";
+    document.body.style.overflowY = "hidden";
+  } else {
+    document.documentElement.style.overflowY = "auto";
+    document.body.style.overflowY = "auto";
+  }
+}
+
+function forceScrollTop() {
+  window.scrollTo(0, 0);
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+
+  requestAnimationFrame(() => window.scrollTo(0, 0));
+}
+
+/* =========================
+   NAVIGATION
+========================= */
+
 function goTo(index) {
   var track = document.getElementById("track");
   if (!track) return;
@@ -8,9 +43,14 @@ function goTo(index) {
   currentIndex = index;
   track.style.transform = "translateX(-" + (index * 25) + "%)";
 
-  // 🔥 SCROLL AUTOMATIQUE EN HAUT
-  window.scrollTo(0, 0);
+  forceScrollTop();
+
+  setTimeout(updateScrollLock, 60);
 }
+
+/* =========================
+   LOADING
+========================= */
 
 function resetLoading() {
   var bar = document.getElementById("progressBar");
@@ -64,17 +104,6 @@ function bootTo(index) {
   resetLoading();
   overlay.classList.add("active");
 
-  var glitchCount = 1 + Math.floor(Math.random() * 2);
-  for (var g = 0; g < glitchCount; g++) {
-    (function(delay) {
-      setTimeout(function() {
-        overlay.classList.remove("glitch");
-        void overlay.offsetWidth;
-        overlay.classList.add("glitch");
-      }, delay);
-    })(180 + Math.floor(Math.random() * 700));
-  }
-
   var lines = [
     "INITIALIZING SECURE SESSION...",
     "VERIFYING ACCESS TOKEN...",
@@ -93,6 +122,10 @@ function bootTo(index) {
         goTo(index);
         overlay.classList.remove("active");
         bootRunning = false;
+
+        forceScrollTop();
+        updateScrollLock();
+
       }, 260);
       return;
     }
@@ -116,41 +149,42 @@ function bootTo(index) {
   writeNextLine();
 }
 
+/* =========================
+   MISSIONS
+========================= */
+
 function openMission(key) {
   var mission = missions[key];
   if (!mission) return;
 
-  var systemEl = document.getElementById("detailSystemLine");
-  var titleEl = document.getElementById("detailMainTitle");
-  var subEl = document.getElementById("detailSub");
+  document.getElementById("detailSystemLine").textContent = mission.system;
+  document.getElementById("detailMainTitle").textContent = mission.title;
+  document.getElementById("detailSub").textContent = mission.sub;
+  document.getElementById("detailClearance").textContent = mission.clearance || "—";
+  document.getElementById("detailTheatre").textContent = mission.theatre || "—";
+  document.getElementById("detailRisk").textContent = mission.risk || "—";
+
   var contextEl = document.getElementById("detailContext");
   var outcomeEl = document.getElementById("detailOutcome");
   var timelineEl = document.getElementById("detailTimeline");
 
-  var clearanceEl = document.getElementById("detailClearance");
-  var theatreEl = document.getElementById("detailTheatre");
-  var riskEl = document.getElementById("detailRisk");
-
-  if (systemEl) systemEl.textContent = mission.system;
-  if (titleEl) titleEl.textContent = mission.title;
-  if (subEl) subEl.textContent = mission.sub;
-  if (clearanceEl) clearanceEl.textContent = mission.clearance || "—";
-  if (theatreEl) theatreEl.textContent = mission.theatre || "—";
-  if (riskEl) riskEl.textContent = mission.risk || "—";
-
-  if (contextEl) contextEl.textContent = "";
-  if (outcomeEl) outcomeEl.textContent = "";
-  if (timelineEl) timelineEl.innerHTML = "";
+  contextEl.textContent = "";
+  outcomeEl.textContent = "";
+  timelineEl.innerHTML = "";
 
   bootTo(3);
 
   setTimeout(function () {
+    forceScrollTop();
+    updateScrollLock();
+
     typeText(contextEl, mission.context, 8, function () {
+
       var i = 0;
 
-      function addNextTimelineItem() {
+      function addNext() {
         if (i >= mission.timeline.length) {
-          typeText(outcomeEl, mission.outcome, 8);
+          typeText(outcomeEl, mission.outcome, 8, updateScrollLock);
           return;
         }
 
@@ -159,15 +193,25 @@ function openMission(key) {
 
         typeText(li, mission.timeline[i], 7, function () {
           i++;
-          setTimeout(addNextTimelineItem, 60);
+          updateScrollLock();
+          setTimeout(addNext, 60);
         });
       }
 
-      addNextTimelineItem();
+      addNext();
     });
-  }, 550);
+
+  }, 500);
 }
+
+/* =========================
+   INIT
+========================= */
+
+window.addEventListener("resize", updateScrollLock);
 
 window.onload = function () {
   goTo(0);
+  forceScrollTop();
+  updateScrollLock();
 };
