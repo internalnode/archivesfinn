@@ -1,23 +1,24 @@
 var currentIndex = 0;
 var bootRunning = false;
 
-function getScreen(index) {
+function getScreenScroll(index) {
   var screens = document.querySelectorAll(".screen");
-  return screens[index] || null;
+  if (!screens[index]) return null;
+  return screens[index].querySelector(".screen-scroll");
 }
 
 function scrollScreenTop(index) {
-  var screen = getScreen(index);
-  if (!screen) return;
+  var scrollBox = getScreenScroll(index);
+  if (!scrollBox) return;
 
-  screen.scrollTop = 0;
+  scrollBox.scrollTop = 0;
 
   requestAnimationFrame(function () {
-    screen.scrollTop = 0;
+    scrollBox.scrollTop = 0;
   });
 
   setTimeout(function () {
-    screen.scrollTop = 0;
+    scrollBox.scrollTop = 0;
   }, 60);
 }
 
